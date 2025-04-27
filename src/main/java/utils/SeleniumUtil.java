@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,7 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,7 +28,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static utils.Constant.*;
+import static utils.Constant.ACTIONS;
+import static utils.Constant.CHROME_DRIVER;
+import static utils.Constant.WAIT;
+import static utils.Constant.WAIT_TIME;
 
 /**
  * @author loks666
@@ -50,7 +55,8 @@ public class SeleniumUtil {
         String osType = getOSType(osName);
         switch (osType) {
             case "windows":
-                options.setBinary("C:/Program Files/Google/Chrome/Application/chrome.exe");//TODO 注意: 这里需要修改为你的chrome的安装路径,不然启动会报错!!! 右键chrome图标右键，选择属性，复制路径
+                //TODO 注意: 这里需要修改为你的chrome的安装路径,不然启动会报错!!! 右键chrome图标右键，选择属性，复制路径
+                options.setBinary("C:/Program Files/Google/Chrome/Application/chrome.exe");
                 System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
                 break;
             case "mac":
@@ -76,6 +82,15 @@ public class SeleniumUtil {
             options.addArguments("--window-position=2800,1000"); //将窗口移动到副屏的起始位置
         }
 //        options.addArguments("--headless"); //使用无头模式
+
+        // 设置代理地址
+        String proxyAddress = "127.0.0.1:10809";
+        // 创建代理对象
+        Proxy proxy = new Proxy();
+        proxy.setHttpProxy(proxyAddress)
+                // 同时设置 HTTPS
+                .setSslProxy(proxyAddress);
+        options.setProxy(proxy);
         CHROME_DRIVER = new ChromeDriver(options);
         CHROME_DRIVER.manage().window().maximize();
     }

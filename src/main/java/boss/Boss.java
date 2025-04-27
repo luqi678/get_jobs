@@ -24,11 +24,21 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Scanner;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static utils.Bot.sendMessageByTime;
-import static utils.Constant.*;
+import static utils.Constant.ACTIONS;
+import static utils.Constant.CHROME_DRIVER;
+import static utils.Constant.WAIT;
 import static utils.JobUtils.formatDuration;
 
 /**
@@ -359,6 +369,7 @@ public class Boss {
             jobs.add(job);
         }
 
+/*
         for (Job job : jobs) {
             // 打开新的标签页
             JavascriptExecutor jse = CHROME_DRIVER;
@@ -463,6 +474,7 @@ public class Boss {
             }
             closeWindow(tabs);
         }
+*/
         return resultList.size();
     }
 
